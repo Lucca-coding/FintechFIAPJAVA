@@ -16,6 +16,4 @@ public class Orcamento {
     public boolean verificarSeEstourouOrcamento() {
         return this.gastoAtual > this.limiteGasto;
     }
-
-    // Getters e Setters
 }

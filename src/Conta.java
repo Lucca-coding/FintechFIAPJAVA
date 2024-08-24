@@ -22,6 +22,4 @@ public class Conta {
     public double consultarSaldo() {
         return this.saldo;
     }
-
-    // Getters e Setters
 }
