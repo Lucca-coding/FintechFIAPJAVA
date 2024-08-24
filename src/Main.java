@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Login usuario = null;
         GerenciadorDeTransacoes gerenciadorDeTransacoes = new GerenciadorDeTransacoes();
+        GerenciadorDeObjetivos gerenciadorDeObjetivos = new GerenciadorDeObjetivos();
         boolean loggedIn = false;
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
@@ -15,7 +16,10 @@ public class Main {
             System.out.println("3. Adicionar Recebimento");
             System.out.println("4. Adicionar Gasto");
             System.out.println("5. Exibir Transações");
-            System.out.println("6. Sair");
+            System.out.println("6. Criar Objetivo Financeiro");
+            System.out.println("7. Transferir para Objetivo");
+            System.out.println("8. Exibir Objetivos Financeiros");
+            System.out.println("9. Sair");
             System.out.print("Escolha uma opção: ");
 
             if (scanner.hasNextInt()) {
@@ -80,6 +84,37 @@ public class Main {
                         }
                         break;
                     case 6:
+                        if (loggedIn) {
+                            System.out.print("Digite o nome do objetivo: ");
+                            String nomeObjetivo = scanner.nextLine();
+                            System.out.print("Digite o valor da meta: ");
+                            double valorMeta = scanner.nextDouble();
+                            scanner.nextLine();
+                            gerenciadorDeObjetivos.criarObjetivo(nomeObjetivo, valorMeta);
+                        } else {
+                            System.out.println("Você precisa estar logado para criar um objetivo financeiro.");
+                        }
+                        break;
+                    case 7:
+                        if (loggedIn) {
+                            System.out.print("Digite o nome do objetivo: ");
+                            String nomeObjetivo = scanner.nextLine();
+                            System.out.print("Digite o valor a transferir: ");
+                            double valorTransferencia = scanner.nextDouble();
+                            scanner.nextLine();
+                            gerenciadorDeObjetivos.transferirParaObjetivo(nomeObjetivo, valorTransferencia, gerenciadorDeTransacoes);
+                        } else {
+                            System.out.println("Você precisa estar logado para transferir dinheiro para um objetivo.");
+                        }
+                        break;
+                    case 8:
+                        if (loggedIn) {
+                            gerenciadorDeObjetivos.exibirObjetivos();
+                        } else {
+                            System.out.println("Você precisa estar logado para visualizar seus objetivos financeiros.");
+                        }
+                        break;
+                    case 9:
                         System.out.println("Saindo...");
                         continuar = false;
                         break;

@@ -15,9 +15,9 @@ public class GerenciadorDeTransacoes {
         transacoes.add(transacao);
 
         if (tipo.equalsIgnoreCase("Recebimento")) {
-            saldo += valor;  // Atualiza o saldo com o valor do recebimento
+            saldo += valor;
         } else if (tipo.equalsIgnoreCase("Gasto")) {
-            saldo -= valor;  // Atualiza o saldo subtraindo o valor do gasto
+            saldo -= valor;
         }
 
         System.out.println(tipo + " de " + valor + " adicionado(a) com sucesso.");
@@ -37,5 +37,13 @@ public class GerenciadorDeTransacoes {
 
     public void exibirSaldo() {
         System.out.println("=== Saldo Atual: " + saldo + " ===");
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void atualizarSaldo(double valor) {
+        this.saldo += valor;
     }
 }
