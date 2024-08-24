@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Login usuario = null;  // Inicialmente, não há usuário registrado
+        Login usuario = null;
+        boolean loggedIn = false;  // Variável para rastrear o estado de login
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
 
@@ -10,7 +11,10 @@ public class Main {
             System.out.println("=== Menu de Login ===");
             System.out.println("1. Registrar");
             System.out.println("2. Fazer Login");
-            System.out.println("3. Sair");
+            System.out.println("3. Adicionar Recebimento");
+            System.out.println("4. Adicionar Gasto");
+            System.out.println("5. Exibir Transações");
+            System.out.println("6. Sair");
             System.out.print("Escolha uma opção: ");
 
             if (scanner.hasNextInt()) {
@@ -39,12 +43,44 @@ public class Main {
 
                             if (usuario.autenticarUsuario(email, senha)) {
                                 usuario.redirecionarParaTelaPrincipal();
+                                loggedIn = true;  // Atualizar o estado de login
                             } else {
                                 usuario.exibirMensagemErro();
                             }
                         }
                         break;
                     case 3:
+                        if (loggedIn) {
+                            System.out.print("Digite o valor do recebimento: ");
+                            double valorRecebimento = scanner.nextDouble();
+                            scanner.nextLine();  // Consumir a nova linha
+                            System.out.print("Digite a descrição do recebimento: ");
+                            String descricaoRecebimento = scanner.nextLine();
+                            usuario.adicionarTransacao(valorRecebimento, "Recebimento", descricaoRecebimento);
+                        } else {
+                            System.out.println("Você precisa estar logado para adicionar uma transação.");
+                        }
+                        break;
+                    case 4:
+                        if (loggedIn) {
+                            System.out.print("Digite o valor do gasto: ");
+                            double valorGasto = scanner.nextDouble();
+                            scanner.nextLine();  // Consumir a nova linha
+                            System.out.print("Digite a descrição do gasto: ");
+                            String descricaoGasto = scanner.nextLine();
+                            usuario.adicionarTransacao(valorGasto, "Gasto", descricaoGasto);
+                        } else {
+                            System.out.println("Você precisa estar logado para adicionar uma transação.");
+                        }
+                        break;
+                    case 5:
+                        if (loggedIn) {
+                            usuario.exibirTransacoes();
+                        } else {
+                            System.out.println("Você precisa estar logado para visualizar suas transações.");
+                        }
+                        break;
+                    case 6:
                         System.out.println("Saindo...");
                         continuar = false;
                         break;
@@ -53,12 +89,10 @@ public class Main {
                         break;
                 }
             } else {
-                // Caso o usuário digite algo que não seja um número
                 System.out.println("Erro: Selecione uma das opções acima.");
                 scanner.nextLine();  // Consumir a entrada inválida
             }
 
-            // Voltar ao menu após a tentativa de login, se o usuário não escolheu sair
             if (continuar) {
                 System.out.println("\nPressione Enter para voltar ao menu inicial...");
                 scanner.nextLine();

@@ -1,24 +1,36 @@
 import java.util.Date;
 
 public class Transacao {
-    private String descricao;
-    private double valor;
     private Date data;
-    private String tipoTransacao;
-    private Conta conta;
+    private double valor;
+    private String tipo;  // "Recebimento" ou "Gasto"
+    private String descricao;
 
-    public Transacao(String descricao, double valor, Date data, String tipoTransacao, Conta conta) {
-        this.descricao = descricao;
+    public Transacao(double valor, String tipo, String descricao) {
+        this.data = new Date();
         this.valor = valor;
-        this.data = data;
-        this.tipoTransacao = tipoTransacao;
-        this.conta = conta;
+        this.tipo = tipo;
+        this.descricao = descricao;
     }
 
-    public void registrarTransacao() {
-        // Implementar o registro da transação
-        conta.atualizarSaldo(tipoTransacao.equals("Receita") ? valor : -valor);
+    public Date getData() {
+        return data;
     }
 
-    // Métodos para listar transações, calcular total de receitas e despesas, etc.
+    public double getValor() {
+        return valor;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    @Override
+    public String toString() {
+        return "Data: " + data + ", Tipo: " + tipo + ", Valor: " + valor + ", Descrição: " + descricao;
+    }
 }
