@@ -26,12 +26,10 @@ public class Main {
                         System.out.print("Digite sua senha: ");
                         String senha = scanner.nextLine();
 
-                        Login Login = new Login(email, senha);
-
-                        if (Login.autenticarUsuario(Login)) {
-                            Login.redirecionarParaTelaPrincipal();
+                        if (usuario.autenticarUsuario(email, senha)) {
+                            usuario.redirecionarParaTelaPrincipal();
                         } else {
-                            Login.exibirMensagemErro();
+                            usuario.exibirMensagemErro();
                         }
                         break;
                     case 2:

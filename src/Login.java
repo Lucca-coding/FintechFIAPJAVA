@@ -7,8 +7,8 @@ public class Login {
         this.senha = senha;
     }
 
-    public boolean autenticarUsuario(Login usuario) {
-        return usuario.validarLogin(this.email, this.senha);
+    public boolean autenticarUsuario(String email, String senha) {
+        return this.email.equals(email) && this.senha.equals(senha);
     }
 
     public void exibirMensagemErro() {
@@ -17,10 +17,6 @@ public class Login {
 
     public void redirecionarParaTelaPrincipal() {
         System.out.println("Login bem-sucedido! Redirecionando para a tela principal...");
-
-    }
-    public boolean validarLogin(String email, String senha) {
-        return this.email.equals(email) && this.senha.equals(senha);
 
     }
 }
