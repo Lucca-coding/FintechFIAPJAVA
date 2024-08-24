@@ -3,7 +3,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Login usuario = null;
-        boolean loggedIn = false;  // Variável para rastrear o estado de login
+        GerenciadorDeTransacoes gerenciadorDeTransacoes = new GerenciadorDeTransacoes();
+        boolean loggedIn = false;
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
 
@@ -23,7 +24,6 @@ public class Main {
 
                 switch (opcao) {
                     case 1:
-                        // Registro do usuário
                         System.out.print("Digite seu email: ");
                         String novoEmail = scanner.nextLine();
                         System.out.print("Digite sua senha: ");
@@ -35,7 +35,6 @@ public class Main {
                         if (usuario == null) {
                             System.out.println("Nenhum usuário registrado. Por favor, registre-se primeiro.");
                         } else {
-                            // Processo de login
                             System.out.print("Digite seu email: ");
                             String email = scanner.nextLine();
                             System.out.print("Digite sua senha: ");
@@ -43,7 +42,7 @@ public class Main {
 
                             if (usuario.autenticarUsuario(email, senha)) {
                                 usuario.redirecionarParaTelaPrincipal();
-                                loggedIn = true;  // Atualizar o estado de login
+                                loggedIn = true;
                             } else {
                                 usuario.exibirMensagemErro();
                             }
@@ -53,10 +52,10 @@ public class Main {
                         if (loggedIn) {
                             System.out.print("Digite o valor do recebimento: ");
                             double valorRecebimento = scanner.nextDouble();
-                            scanner.nextLine();  // Consumir a nova linha
+                            scanner.nextLine();
                             System.out.print("Digite a descrição do recebimento: ");
                             String descricaoRecebimento = scanner.nextLine();
-                            usuario.adicionarTransacao(valorRecebimento, "Recebimento", descricaoRecebimento);
+                            gerenciadorDeTransacoes.adicionarTransacao(valorRecebimento, "Recebimento", descricaoRecebimento);
                         } else {
                             System.out.println("Você precisa estar logado para adicionar uma transação.");
                         }
@@ -65,17 +64,17 @@ public class Main {
                         if (loggedIn) {
                             System.out.print("Digite o valor do gasto: ");
                             double valorGasto = scanner.nextDouble();
-                            scanner.nextLine();  // Consumir a nova linha
+                            scanner.nextLine();
                             System.out.print("Digite a descrição do gasto: ");
                             String descricaoGasto = scanner.nextLine();
-                            usuario.adicionarTransacao(valorGasto, "Gasto", descricaoGasto);
+                            gerenciadorDeTransacoes.adicionarTransacao(valorGasto, "Gasto", descricaoGasto);
                         } else {
                             System.out.println("Você precisa estar logado para adicionar uma transação.");
                         }
                         break;
                     case 5:
                         if (loggedIn) {
-                            usuario.exibirTransacoes();
+                            gerenciadorDeTransacoes.exibirTransacoes();
                         } else {
                             System.out.println("Você precisa estar logado para visualizar suas transações.");
                         }
