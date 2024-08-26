@@ -6,6 +6,7 @@ public class Main {
         Perfil perfil = null;
         GerenciadorDeTransacoes gerenciadorDeTransacoes = new GerenciadorDeTransacoes();
         GerenciadorDeObjetivos gerenciadorDeObjetivos = new GerenciadorDeObjetivos();
+        GerenciadorDeCategorias gerenciadorDeCategorias = new GerenciadorDeCategorias();
         boolean loggedIn = false;
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
@@ -25,7 +26,9 @@ public class Main {
                 System.out.println("5. Criar Objetivo Financeiro");
                 System.out.println("6. Transferir para Objetivo");
                 System.out.println("7. Exibir Objetivos Financeiros");
-                System.out.println("8. Sair");
+                System.out.println("8. Criar Categoria");
+                System.out.println("9. Exibir Categorias");
+                System.out.println("10. Sair");
             }
 
             System.out.print("Escolha uma opção: ");
@@ -87,20 +90,23 @@ public class Main {
                             }
                             break;
                         case 2:
-                            System.out.print("Digite o valor do recebimento: ");
-                            double valorRecebimento = scanner.nextDouble();
-                            scanner.nextLine();
-                            System.out.print("Digite a descrição do recebimento: ");
-                            String descricaoRecebimento = scanner.nextLine();
-                            gerenciadorDeTransacoes.adicionarTransacao(valorRecebimento, "Recebimento", descricaoRecebimento);
-                            break;
                         case 3:
-                            System.out.print("Digite o valor do gasto: ");
-                            double valorGasto = scanner.nextDouble();
+                            System.out.print("Digite o valor da transação: ");
+                            double valor = scanner.nextDouble();
                             scanner.nextLine();
-                            System.out.print("Digite a descrição do gasto: ");
-                            String descricaoGasto = scanner.nextLine();
-                            gerenciadorDeTransacoes.adicionarTransacao(valorGasto, "Gasto", descricaoGasto);
+                            System.out.print("Digite a descrição da transação: ");
+                            String descricao = scanner.nextLine();
+                            gerenciadorDeCategorias.exibirCategorias();
+                            System.out.print("Escolha a categoria: ");
+                            String nomeCategoria = scanner.nextLine();
+                            Categoria categoria = gerenciadorDeCategorias.obterCategoriaPorNome(nomeCategoria);
+
+                            if (categoria != null) {
+                                String tipo = (opcao == 2) ? "Recebimento" : "Gasto";
+                                gerenciadorDeTransacoes.adicionarTransacao(valor, tipo, descricao, categoria);
+                            } else {
+                                System.out.println("Categoria inválida. Transação não foi adicionada.");
+                            }
                             break;
                         case 4:
                             gerenciadorDeTransacoes.exibirTransacoes();
@@ -125,6 +131,14 @@ public class Main {
                             gerenciadorDeObjetivos.exibirObjetivos();
                             break;
                         case 8:
+                            System.out.print("Digite o nome da nova categoria: ");
+                            String novaCategoria = scanner.nextLine();
+                            gerenciadorDeCategorias.adicionarCategoria(novaCategoria);
+                            break;
+                        case 9:
+                            gerenciadorDeCategorias.exibirCategorias();
+                            break;
+                        case 10:
                             System.out.println("Saindo...");
                             continuar = false;
                             break;

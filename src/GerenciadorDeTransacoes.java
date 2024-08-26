@@ -7,43 +7,29 @@ public class GerenciadorDeTransacoes {
 
     public GerenciadorDeTransacoes() {
         this.transacoes = new ArrayList<>();
-        this.saldo = 0.0;  // Saldo inicial da conta
+        this.saldo = 0.0;
     }
 
-    public void adicionarTransacao(double valor, String tipo, String descricao) {
-        Transacao transacao = new Transacao(valor, tipo, descricao);
-        transacoes.add(transacao);
-
+    public void adicionarTransacao(double valor, String tipo, String descricao, Categoria categoria) {
+        Transacao novaTransacao = new Transacao(valor, tipo, descricao, categoria);
+        transacoes.add(novaTransacao);
         if (tipo.equalsIgnoreCase("Recebimento")) {
             saldo += valor;
         } else if (tipo.equalsIgnoreCase("Gasto")) {
             saldo -= valor;
         }
-
-        System.out.println(tipo + " de " + valor + " adicionado(a) com sucesso.");
+        System.out.println("Transação adicionada com sucesso: " + novaTransacao);
     }
 
     public void exibirTransacoes() {
-        if (transacoes.isEmpty()) {
-            System.out.println("Nenhuma transação registrada.");
-        } else {
-            System.out.println("=== Suas Transações ===");
-            for (Transacao transacao : transacoes) {
-                System.out.println(transacao);
-            }
+        System.out.println("Histórico de Transações:");
+        for (Transacao transacao : transacoes) {
+            System.out.println(transacao);
         }
-        exibirSaldo();
-    }
-
-    public void exibirSaldo() {
-        System.out.println("=== Saldo Atual: " + saldo + " ===");
+        System.out.println("Saldo atual: R$" + saldo);
     }
 
     public double getSaldo() {
         return saldo;
-    }
-
-    public void atualizarSaldo(double valor) {
-        this.saldo += valor;
     }
 }
