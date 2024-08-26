@@ -87,23 +87,52 @@ public class Main {
                             }
                             break;
                         case 2:
-                        case 3:
-                            System.out.print("Digite o valor da transação: ");
-                            double valor = scanner.nextDouble();
-                            scanner.nextLine();
-                            System.out.print("Digite a descrição da transação: ");
-                            String descricao = scanner.nextLine();
-                            Categoria.exibirCategorias();
-                            System.out.print("Escolha a categoria: ");
-                            String nomeCategoria = scanner.nextLine();
-                            Categoria categoria = Categoria.obterCategoriaPorNome(nomeCategoria);
+                            System.out.print("Digite o valor do recebimento: ");
+                            double valorRecebimento = scanner.nextDouble();
+                            scanner.nextLine(); // Consumir a nova linha
+                            System.out.print("Digite a descrição do recebimento: ");
+                            String descricaoRecebimento = scanner.nextLine();
 
-                            if (categoria != null) {
-                                String tipo = (opcao == 2) ? "Recebimento" : "Gasto";
-                                new Transacao(valor, tipo, descricao, categoria);
+                            Categoria.exibirCategorias();
+                            System.out.print("Escolha a categoria ou pressione Enter para usar a categoria padrão: ");
+                            String nomeCategoriaRecebimento = scanner.nextLine();
+                            Categoria categoriaRecebimento;
+
+                            if (nomeCategoriaRecebimento.isEmpty()) {
+                                categoriaRecebimento = Categoria.obterCategoriaPadrao();
                             } else {
-                                System.out.println("Categoria inválida. Transação não foi adicionada.");
+                                categoriaRecebimento = Categoria.obterCategoriaPorNome(nomeCategoriaRecebimento);
                             }
+
+                            if (categoriaRecebimento == null) {
+                                categoriaRecebimento = Categoria.obterCategoriaPadrao();
+                            }
+
+                            new Transacao(valorRecebimento, "Recebimento", descricaoRecebimento, categoriaRecebimento);
+                            break;
+                        case 3:
+                            System.out.print("Digite o valor do gasto: ");
+                            double valorGasto = scanner.nextDouble();
+                            scanner.nextLine(); // Consumir a nova linha
+                            System.out.print("Digite a descrição do gasto: ");
+                            String descricaoGasto = scanner.nextLine();
+
+                            Categoria.exibirCategorias();
+                            System.out.print("Escolha a categoria ou pressione Enter para usar a categoria padrão: ");
+                            String nomeCategoriaGasto = scanner.nextLine();
+                            Categoria categoriaGasto;
+
+                            if (nomeCategoriaGasto.isEmpty()) {
+                                categoriaGasto = Categoria.obterCategoriaPadrao();
+                            } else {
+                                categoriaGasto = Categoria.obterCategoriaPorNome(nomeCategoriaGasto);
+                            }
+
+                            if (categoriaGasto == null) {
+                                categoriaGasto = Categoria.obterCategoriaPadrao();
+                            }
+
+                            new Transacao(valorGasto, "Gasto", descricaoGasto, categoriaGasto);
                             break;
                         case 4:
                             Transacao.exibirTransacoes();
@@ -162,7 +191,6 @@ public class Main {
                 scanner.nextLine();
             }
         }
-
         scanner.close();
     }
 }

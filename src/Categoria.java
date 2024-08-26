@@ -4,6 +4,7 @@ import java.util.List;
 public class Categoria {
     private String nome;
     private static List<Categoria> categorias = new ArrayList<>();
+    private static Categoria categoriaPadrao = new Categoria("Padrão");
 
     public Categoria(String nome) {
         this.nome = nome;
@@ -26,6 +27,10 @@ public class Categoria {
         }
         System.out.println("Categoria não encontrada.");
         return null;
+    }
+
+    public static Categoria obterCategoriaPadrao() {
+        return categoriaPadrao;
     }
 
     public static void exibirCategorias() {

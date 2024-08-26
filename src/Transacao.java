@@ -13,7 +13,13 @@ public class Transacao {
         this.valor = valor;
         this.tipo = tipo;
         this.descricao = descricao;
-        this.categoria = categoria;
+
+        if (categoria == null) {
+            this.categoria = Categoria.obterCategoriaPadrao();
+        } else {
+            this.categoria = categoria;
+        }
+
         transacoes.add(this);
         if (tipo.equalsIgnoreCase("Recebimento")) {
             saldo += valor;
