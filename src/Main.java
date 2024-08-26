@@ -4,9 +4,6 @@ public class Main {
     public static void main(String[] args) {
         Login usuario = null;
         Perfil perfil = null;
-        GerenciadorDeTransacoes gerenciadorDeTransacoes = new GerenciadorDeTransacoes();
-        GerenciadorDeObjetivos gerenciadorDeObjetivos = new GerenciadorDeObjetivos();
-        GerenciadorDeCategorias gerenciadorDeCategorias = new GerenciadorDeCategorias();
         boolean loggedIn = false;
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
@@ -96,20 +93,20 @@ public class Main {
                             scanner.nextLine();
                             System.out.print("Digite a descrição da transação: ");
                             String descricao = scanner.nextLine();
-                            gerenciadorDeCategorias.exibirCategorias();
+                            Categoria.exibirCategorias();
                             System.out.print("Escolha a categoria: ");
                             String nomeCategoria = scanner.nextLine();
-                            Categoria categoria = gerenciadorDeCategorias.obterCategoriaPorNome(nomeCategoria);
+                            Categoria categoria = Categoria.obterCategoriaPorNome(nomeCategoria);
 
                             if (categoria != null) {
                                 String tipo = (opcao == 2) ? "Recebimento" : "Gasto";
-                                gerenciadorDeTransacoes.adicionarTransacao(valor, tipo, descricao, categoria);
+                                new Transacao(valor, tipo, descricao, categoria);
                             } else {
                                 System.out.println("Categoria inválida. Transação não foi adicionada.");
                             }
                             break;
                         case 4:
-                            gerenciadorDeTransacoes.exibirTransacoes();
+                            Transacao.exibirTransacoes();
                             break;
                         case 5:
                             System.out.print("Digite o nome do objetivo: ");
@@ -117,7 +114,7 @@ public class Main {
                             System.out.print("Digite o valor da meta: ");
                             double valorMeta = scanner.nextDouble();
                             scanner.nextLine();
-                            gerenciadorDeObjetivos.criarObjetivo(nomeObjetivo, valorMeta);
+                            new ObjetivoFinanceiro(nomeObjetivo, valorMeta);
                             break;
                         case 6:
                             System.out.print("Digite o nome do objetivo: ");
@@ -125,18 +122,26 @@ public class Main {
                             System.out.print("Digite o valor a transferir: ");
                             double valorTransferencia = scanner.nextDouble();
                             scanner.nextLine();
-                            gerenciadorDeObjetivos.transferirParaObjetivo(nomeObjetivo, valorTransferencia, gerenciadorDeTransacoes);
+                            ObjetivoFinanceiro objetivo = ObjetivoFinanceiro.obterObjetivoPorNome(nomeObjetivo);
+
+                            if (objetivo != null && Transacao.getSaldo() >= valorTransferencia) {
+                                objetivo.adicionarValor(valorTransferencia);
+                                new Transacao(valorTransferencia, "Transferência para Objetivo", nomeObjetivo, new Categoria("Transferência"));
+                            } else {
+                                System.out.println("Saldo insuficiente ou objetivo não encontrado.");
+                            }
                             break;
                         case 7:
-                            gerenciadorDeObjetivos.exibirObjetivos();
+                            ObjetivoFinanceiro.exibirObjetivos();
                             break;
                         case 8:
                             System.out.print("Digite o nome da nova categoria: ");
-                            String novaCategoria = scanner.nextLine();
-                            gerenciadorDeCategorias.adicionarCategoria(novaCategoria);
+                            String nomeNovaCategoria = scanner.nextLine();
+                            new Categoria(nomeNovaCategoria);
+                            System.out.println("Categoria '" + nomeNovaCategoria + "' criada com sucesso.");
                             break;
                         case 9:
-                            gerenciadorDeCategorias.exibirCategorias();
+                            Categoria.exibirCategorias();
                             break;
                         case 10:
                             System.out.println("Saindo...");
@@ -149,7 +154,7 @@ public class Main {
                 }
             } else {
                 System.out.println("Erro: Selecione uma das opções acima.");
-                scanner.nextLine();  // Consumir a entrada inválida
+                scanner.nextLine();
             }
 
             if (continuar) {
