@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Login usuario = null;
+        Perfil perfil = null;
         GerenciadorDeTransacoes gerenciadorDeTransacoes = new GerenciadorDeTransacoes();
         GerenciadorDeObjetivos gerenciadorDeObjetivos = new GerenciadorDeObjetivos();
         boolean loggedIn = false;
@@ -13,13 +14,14 @@ public class Main {
             System.out.println("=== Menu de Login ===");
             System.out.println("1. Registrar");
             System.out.println("2. Fazer Login");
-            System.out.println("3. Adicionar Recebimento");
-            System.out.println("4. Adicionar Gasto");
-            System.out.println("5. Exibir Transações");
-            System.out.println("6. Criar Objetivo Financeiro");
-            System.out.println("7. Transferir para Objetivo");
-            System.out.println("8. Exibir Objetivos Financeiros");
-            System.out.println("9. Sair");
+            System.out.println("3. Exibir Perfil");
+            System.out.println("4. Adicionar Recebimento");
+            System.out.println("5. Adicionar Gasto");
+            System.out.println("6. Exibir Transações");
+            System.out.println("7. Criar Objetivo Financeiro");
+            System.out.println("8. Transferir para Objetivo");
+            System.out.println("9. Exibir Objetivos Financeiros");
+            System.out.println("10. Sair");
             System.out.print("Escolha uma opção: ");
 
             if (scanner.hasNextInt()) {
@@ -28,11 +30,19 @@ public class Main {
 
                 switch (opcao) {
                     case 1:
+                        System.out.print("Digite seu nome completo: ");
+                        String nomeCompleto = scanner.nextLine();
+                        System.out.print("Digite sua data de nascimento (dd/mm/aaaa): ");
+                        String dataNascimento = scanner.nextLine();
+                        System.out.print("Digite seu telefone: ");
+                        String telefone = scanner.nextLine();
                         System.out.print("Digite seu email: ");
-                        String novoEmail = scanner.nextLine();
+                        String email = scanner.nextLine();
                         System.out.print("Digite sua senha: ");
-                        String novaSenha = scanner.nextLine();
-                        usuario = new Login(novoEmail, novaSenha);
+                        String senha = scanner.nextLine();
+
+                        usuario = new Login(email, senha);
+                        perfil = new Perfil(nomeCompleto, dataNascimento, telefone, email);
                         System.out.println("Usuário registrado com sucesso!");
                         break;
                     case 2:
@@ -40,9 +50,9 @@ public class Main {
                             System.out.println("Nenhum usuário registrado. Por favor, registre-se primeiro.");
                         } else {
                             System.out.print("Digite seu email: ");
-                            String email = scanner.nextLine();
+                            email = scanner.nextLine();
                             System.out.print("Digite sua senha: ");
-                            String senha = scanner.nextLine();
+                            senha = scanner.nextLine();
 
                             if (usuario.autenticarUsuario(email, senha)) {
                                 usuario.redirecionarParaTelaPrincipal();
@@ -53,6 +63,13 @@ public class Main {
                         }
                         break;
                     case 3:
+                        if (loggedIn && perfil != null) {
+                            System.out.println(perfil);
+                        } else {
+                            System.out.println("Você precisa estar logado para visualizar o perfil.");
+                        }
+                        break;
+                    case 4:
                         if (loggedIn) {
                             System.out.print("Digite o valor do recebimento: ");
                             double valorRecebimento = scanner.nextDouble();
@@ -64,7 +81,7 @@ public class Main {
                             System.out.println("Você precisa estar logado para adicionar uma transação.");
                         }
                         break;
-                    case 4:
+                    case 5:
                         if (loggedIn) {
                             System.out.print("Digite o valor do gasto: ");
                             double valorGasto = scanner.nextDouble();
@@ -76,14 +93,14 @@ public class Main {
                             System.out.println("Você precisa estar logado para adicionar uma transação.");
                         }
                         break;
-                    case 5:
+                    case 6:
                         if (loggedIn) {
                             gerenciadorDeTransacoes.exibirTransacoes();
                         } else {
                             System.out.println("Você precisa estar logado para visualizar suas transações.");
                         }
                         break;
-                    case 6:
+                    case 7:
                         if (loggedIn) {
                             System.out.print("Digite o nome do objetivo: ");
                             String nomeObjetivo = scanner.nextLine();
@@ -95,7 +112,7 @@ public class Main {
                             System.out.println("Você precisa estar logado para criar um objetivo financeiro.");
                         }
                         break;
-                    case 7:
+                    case 8:
                         if (loggedIn) {
                             System.out.print("Digite o nome do objetivo: ");
                             String nomeObjetivo = scanner.nextLine();
@@ -107,14 +124,14 @@ public class Main {
                             System.out.println("Você precisa estar logado para transferir dinheiro para um objetivo.");
                         }
                         break;
-                    case 8:
+                    case 9:
                         if (loggedIn) {
                             gerenciadorDeObjetivos.exibirObjetivos();
                         } else {
                             System.out.println("Você precisa estar logado para visualizar seus objetivos financeiros.");
                         }
                         break;
-                    case 9:
+                    case 10:
                         System.out.println("Saindo...");
                         continuar = false;
                         break;
