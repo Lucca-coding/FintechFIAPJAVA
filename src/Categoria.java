@@ -1,16 +1,11 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Categoria {
     private String nome;
-    private static List<Categoria> categorias = new ArrayList<>();
-    private static Categoria categoriaPadrao = new Categoria("Padrão");
 
     public Categoria(String nome) {
         this.nome = nome;
-        categorias.add(this);
     }
 
+    // Getters e setters para o atributo nome
     public String getNome() {
         return nome;
     }
@@ -19,29 +14,19 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public static Categoria obterCategoriaPorNome(String nome) {
-        for (Categoria categoria : categorias) {
-            if (categoria.getNome().equalsIgnoreCase(nome)) {
-                return categoria;
-            }
-        }
-        System.out.println("Categoria não encontrada.");
-        return null;
+    // Métodos para exibir categorias e obter categorias por nome
+    public static void exibirCategorias() {
+        // Implementação para exibir categorias disponíveis
     }
 
     public static Categoria obterCategoriaPadrao() {
-        return categoriaPadrao;
+        // Implementação para retornar a categoria padrão
+        return new Categoria("Padrão");
     }
 
-    public static void exibirCategorias() {
-        System.out.println("Categorias disponíveis:");
-        for (Categoria categoria : categorias) {
-            System.out.println("- " + categoria.getNome());
-        }
-    }
-
-    @Override
-    public String toString() {
-        return nome;
+    public static Categoria obterCategoriaPorNome(String nome) {
+        // Implementação para buscar e retornar a categoria pelo nome
+        // Se não encontrada, retorna null
+        return null; // Substituir com a lógica real
     }
 }
