@@ -73,7 +73,7 @@ public class Main {
                 System.out.println("1. Exibir Perfil");
                 System.out.println("2. Adicionar Recebimento");
                 System.out.println("3. Adicionar Gasto");
-                System.out.println("4. Exibir Transações");
+                System.out.println("4. Exibir última Transação");
                 System.out.println("5. Criar Objetivo Financeiro");
                 System.out.println("6. Transferir para Objetivo");
                 System.out.println("7. Exibir Objetivos Financeiros");
