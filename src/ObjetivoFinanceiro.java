@@ -9,6 +9,18 @@ public class ObjetivoFinanceiro extends Financeiro {
         this.valorAtual = 0.0;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public double getValorAtingir() {
+        return valorAtingir;
+    }
+
+    public double getValorAtual() {
+        return valorAtual;
+    }
+
     public void adicionarValor(double valor) {
         if (valor > 0) {
             valorAtual += valor;
