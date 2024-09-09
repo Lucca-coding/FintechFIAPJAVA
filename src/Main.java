@@ -5,6 +5,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Login usuario = null;
         Perfil perfil = null;
+        Transacao transacao = null;
+        ObjetivoFinanceiro objetivo = null;
         boolean continuar = true;
 
         while (continuar) {
@@ -22,11 +24,19 @@ public class Main {
 
                     switch (opcao) {
                         case 1: // Registrar
+                            System.out.print("Digite seu nome completo: ");
+                            String nome = scanner.nextLine();
+                            System.out.print("Digite sua data de nascimento (dd/mm/aaaa): ");
+                            String dataNascimento = scanner.nextLine();
+                            System.out.print("Digite seu telefone: ");
+                            String telefone = scanner.nextLine();
                             System.out.print("Digite seu email: ");
                             String email = scanner.nextLine();
                             System.out.print("Digite sua senha: ");
                             String senha = scanner.nextLine();
+
                             usuario = new Login(email, senha);
+                            perfil = new Perfil(nome, dataNascimento, telefone, email);
                             System.out.println("Usuário registrado com sucesso!");
                             break;
                         case 2: // Fazer Login
@@ -40,6 +50,7 @@ public class Main {
                             String senhaLogin = scanner.nextLine();
                             if (usuario.autenticarUsuario(emailLogin, senhaLogin)) {
                                 System.out.println("Login bem-sucedido!");
+                                usuario.redirecionarParaTelaPrincipal();
                             } else {
                                 usuario.exibirMensagemErro();
                             }
@@ -96,19 +107,13 @@ public class Main {
                             Categoria.exibirCategorias();
                             System.out.print("Escolha a categoria ou pressione Enter para usar a categoria padrão: ");
                             String nomeCategoriaRecebimento = scanner.nextLine();
-                            Categoria categoriaRecebimento;
-
-                            if (nomeCategoriaRecebimento.isEmpty()) {
-                                categoriaRecebimento = Categoria.obterCategoriaPadrao();
-                            } else {
-                                categoriaRecebimento = Categoria.obterCategoriaPorNome(nomeCategoriaRecebimento);
-                            }
+                            Categoria categoriaRecebimento = Categoria.obterCategoriaPorNome(nomeCategoriaRecebimento);
 
                             if (categoriaRecebimento == null) {
                                 categoriaRecebimento = Categoria.obterCategoriaPadrao();
                             }
 
-                            new Transacao(valorRecebimento, "Recebimento", descricaoRecebimento, categoriaRecebimento);
+                            transacao = new Transacao(valorRecebimento, "Recebimento", descricaoRecebimento, categoriaRecebimento);
                             System.out.println("Recebimento adicionado com sucesso!");
                             break;
                         case 3: // Adicionar Gasto
@@ -122,23 +127,22 @@ public class Main {
                             Categoria.exibirCategorias();
                             System.out.print("Escolha a categoria ou pressione Enter para usar a categoria padrão: ");
                             String nomeCategoriaGasto = scanner.nextLine();
-                            Categoria categoriaGasto;
-
-                            if (nomeCategoriaGasto.isEmpty()) {
-                                categoriaGasto = Categoria.obterCategoriaPadrao();
-                            } else {
-                                categoriaGasto = Categoria.obterCategoriaPorNome(nomeCategoriaGasto);
-                            }
+                            Categoria categoriaGasto = Categoria.obterCategoriaPorNome(nomeCategoriaGasto);
 
                             if (categoriaGasto == null) {
                                 categoriaGasto = Categoria.obterCategoriaPadrao();
                             }
 
-                            new Transacao(valorGasto, "Gasto", descricaoGasto, categoriaGasto);
+                            transacao = new Transacao(valorGasto, "Gasto", descricaoGasto, categoriaGasto);
                             System.out.println("Gasto adicionado com sucesso!");
                             break;
                         case 4: // Exibir Transações
-                            // Chame o método que exibe transações aqui
+                            if (transacao == null) {
+                                System.out.println("Nenhuma transação registrada.");
+                            } else {
+                                System.out.println("=== Transações ===");
+                                Transacao.exibirTransacao(transacao);
+                            }
                             break;
                         case 5: // Criar Objetivo Financeiro
                             System.out.print("Digite o nome do objetivo financeiro: ");
@@ -147,15 +151,29 @@ public class Main {
                             double valorAtingir = scanner.nextDouble();
                             scanner.nextLine(); // Consumir a nova linha
 
-                            ObjetivoFinanceiro objetivo = new ObjetivoFinanceiro(nomeObjetivo, valorAtingir);
+                            objetivo = new ObjetivoFinanceiro(nomeObjetivo, valorAtingir);
                             System.out.println("Objetivo financeiro criado com sucesso!");
-                            // Adicione o objetivo ao gerenciador ou lista de objetivos
                             break;
                         case 6: // Transferir para Objetivo
-                            // Implemente a lógica para transferir dinheiro para o objetivo financeiro
+                            if (objetivo == null) {
+                                System.out.println("Nenhum objetivo financeiro registrado.");
+                                break;
+                            }
+
+                            System.out.print("Digite o valor a ser transferido: ");
+                            double valorTransferir = scanner.nextDouble();
+                            scanner.nextLine(); // Consumir a nova linha
+
+                            objetivo.adicionarValor(valorTransferir);
+                            System.out.println("Valor transferido com sucesso!");
                             break;
                         case 7: // Exibir Objetivos Financeiros
-                            // Chame o método que exibe objetivos financeiros aqui
+                            if (objetivo == null) {
+                                System.out.println("Nenhum objetivo financeiro registrado.");
+                            } else {
+                                System.out.println("=== Objetivo Financeiro ===");
+                                ObjetivoFinanceiro.exibirObjetivo(objetivo);
+                            }
                             break;
                         case 8: // Sair
                             System.out.println("Saindo...");
@@ -170,14 +188,7 @@ public class Main {
                     scanner.nextLine(); // Consumir a entrada inválida
                 }
             }
-
-            // Voltar ao menu após as operações, se o usuário não escolheu sair
-            if (continuar) {
-                System.out.println("\nPressione Enter para continuar...");
-                scanner.nextLine();
-            }
         }
-
         scanner.close();
     }
 }

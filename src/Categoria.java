@@ -1,32 +1,40 @@
 public class Categoria {
     private String nome;
 
+    // Construtor
     public Categoria(String nome) {
         this.nome = nome;
     }
 
-    // Getters e setters para o atributo nome
+    // Getter para o nome da categoria
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    // Métodos para exibir categorias e obter categorias por nome
+    // Metodo estático para exibir categorias (exemplo)
     public static void exibirCategorias() {
-        // Implementação para exibir categorias disponíveis
+        System.out.println("1. Alimentação");
+        System.out.println("2. Transporte");
+        System.out.println("3. Lazer");
+        System.out.println("4. Outros");
     }
 
-    public static Categoria obterCategoriaPadrao() {
-        // Implementação para retornar a categoria padrão
-        return new Categoria("Padrão");
-    }
-
+    // Metodo estático para obter a categoria por nome (exemplo)
     public static Categoria obterCategoriaPorNome(String nome) {
-        // Implementação para buscar e retornar a categoria pelo nome
-        // Se não encontrada, retorna null
-        return null; // Substituir com a lógica real
+        switch (nome.toLowerCase()) {
+            case "alimentação":
+                return new Categoria("Alimentação");
+            case "transporte":
+                return new Categoria("Transporte");
+            case "lazer":
+                return new Categoria("Lazer");
+            default:
+                return null; // Ou retorna uma categoria padrão
+        }
+    }
+
+    // Metodo estático para obter a categoria padrão (exemplo)
+    public static Categoria obterCategoriaPadrao() {
+        return new Categoria("Outros");
     }
 }

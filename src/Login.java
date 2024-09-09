@@ -29,7 +29,6 @@ public class Login {
         return loggedIn;
     }
 
-    // Getters and setters for email and senha, if needed
     public String getEmail() {
         return email;
     }

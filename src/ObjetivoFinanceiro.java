@@ -6,33 +6,29 @@ public class ObjetivoFinanceiro {
     public ObjetivoFinanceiro(String nome, double valorAtingir) {
         this.nome = nome;
         this.valorAtingir = valorAtingir;
-        this.valorAtual = 0.0;
+        this.valorAtual = 0;
     }
 
-    public void adicionarValor(double valor) {
-        if (valor > 0) {
-            this.valorAtual += valor;
-        }
-    }
-
-    // Getters e setters para os atributos
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public double getValorAtingir() {
         return valorAtingir;
     }
 
-    public void setValorAtingir(double valorAtingir) {
-        this.valorAtingir = valorAtingir;
-    }
-
     public double getValorAtual() {
         return valorAtual;
+    }
+
+    public void adicionarValor(double valor) {
+        this.valorAtual += valor;
+    }
+
+    public static void exibirObjetivo(ObjetivoFinanceiro objetivo) {
+        System.out.println("Nome: " + objetivo.getNome());
+        System.out.println("Valor a Atingir: " + objetivo.getValorAtingir());
+        System.out.println("Valor Atual: " + objetivo.getValorAtual());
+        System.out.println("-----------------------");
     }
 }
