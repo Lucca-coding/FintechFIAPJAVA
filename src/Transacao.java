@@ -1,4 +1,4 @@
-public class Transacao {
+public class Transacao extends Financeiro {
     private double valor;
     private String tipo;
     private String descricao;
@@ -27,11 +27,11 @@ public class Transacao {
         return categoria;
     }
 
-    public static void exibirTransacao(Transacao transacao) {
-        System.out.println("Tipo: " + transacao.getTipo());
-        System.out.println("Valor: " + transacao.getValor());
-        System.out.println("Descrição: " + transacao.getDescricao());
-        System.out.println("Categoria: " + transacao.getCategoria().getNome());
+    public void exibirTransacao() {
+        System.out.println("Tipo: " + this.getTipo());
+        System.out.println("Valor: " + this.getValor());
+        System.out.println("Descrição: " + this.getDescricao());
+        System.out.println("Categoria: " + this.getCategoria().getNome());
         System.out.println("-----------------------");
     }
 }

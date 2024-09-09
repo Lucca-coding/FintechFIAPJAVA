@@ -11,7 +11,7 @@ public class Financeiro {
             System.out.println("Nenhuma transação registrada.");
         } else {
             System.out.println("=== Transação ===");
-            Transacao.exibirTransacao(transacaoAtual);
+            transacaoAtual.exibirTransacao();
         }
     }
 }
