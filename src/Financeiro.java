@@ -1,5 +1,5 @@
 public class Financeiro {
-    private Transacao transacaoAtual;
+    protected Transacao transacaoAtual;
 
     public void adicionarTransacao(Transacao transacao) {
         this.transacaoAtual = transacao;

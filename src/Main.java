@@ -5,7 +5,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Login usuario = null;
         Perfil perfil = null;
-        Financeiro financeiro = new Financeiro();
+        Financeiro financeiro = null;
         ObjetivoFinanceiro objetivo = null;
         boolean continuar = true;
 
@@ -73,7 +73,7 @@ public class Main {
                 System.out.println("1. Exibir Perfil");
                 System.out.println("2. Adicionar Recebimento");
                 System.out.println("3. Adicionar Gasto");
-                System.out.println("4. Exibir última Transação");
+                System.out.println("4. Exibir Transações");
                 System.out.println("5. Criar Objetivo Financeiro");
                 System.out.println("6. Transferir para Objetivo");
                 System.out.println("7. Exibir Objetivos Financeiros");
@@ -97,6 +97,9 @@ public class Main {
                             }
                             break;
                         case 2: // Adicionar Recebimento
+                            if (financeiro == null) {
+                                financeiro = new Financeiro();
+                            }
                             System.out.print("Digite o valor do recebimento: ");
                             double valorRecebimento = scanner.nextDouble();
                             scanner.nextLine(); // Consumir a nova linha
@@ -117,6 +120,9 @@ public class Main {
                             financeiro.adicionarTransacao(transacaoRecebimento);
                             break;
                         case 3: // Adicionar Gasto
+                            if (financeiro == null) {
+                                financeiro = new Financeiro();
+                            }
                             System.out.print("Digite o valor do gasto: ");
                             double valorGasto = scanner.nextDouble();
                             scanner.nextLine(); // Consumir a nova linha
@@ -137,7 +143,11 @@ public class Main {
                             financeiro.adicionarTransacao(transacaoGasto);
                             break;
                         case 4: // Exibir Transações
-                            financeiro.exibirTransacoes();
+                            if (financeiro == null) {
+                                System.out.println("Nenhuma transação registrada.");
+                            } else {
+                                financeiro.exibirTransacoes();
+                            }
                             break;
                         case 5: // Criar Objetivo Financeiro
                             System.out.print("Digite o nome do objetivo financeiro: ");
@@ -160,14 +170,12 @@ public class Main {
                             scanner.nextLine(); // Consumir a nova linha
 
                             objetivo.adicionarValor(valorTransferir);
-                            System.out.println("Valor transferido com sucesso!");
                             break;
                         case 7: // Exibir Objetivos Financeiros
                             if (objetivo == null) {
                                 System.out.println("Nenhum objetivo financeiro registrado.");
                             } else {
-                                System.out.println("=== Objetivo Financeiro ===");
-                                ObjetivoFinanceiro.exibirObjetivo(objetivo);
+                                objetivo.exibirObjetivo();
                             }
                             break;
                         case 8: // Sair

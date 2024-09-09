@@ -1,4 +1,4 @@
-public class ObjetivoFinanceiro {
+public class ObjetivoFinanceiro extends Financeiro {
     private String nome;
     private double valorAtingir;
     private double valorAtual;
@@ -6,29 +6,26 @@ public class ObjetivoFinanceiro {
     public ObjetivoFinanceiro(String nome, double valorAtingir) {
         this.nome = nome;
         this.valorAtingir = valorAtingir;
-        this.valorAtual = 0;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public double getValorAtingir() {
-        return valorAtingir;
-    }
-
-    public double getValorAtual() {
-        return valorAtual;
+        this.valorAtual = 0.0;
     }
 
     public void adicionarValor(double valor) {
-        this.valorAtual += valor;
+        if (valor > 0) {
+            valorAtual += valor;
+            if (valorAtual > valorAtingir) {
+                valorAtual = valorAtingir; // Limitar o valor ao objetivo
+            }
+            System.out.println("Valor transferido com sucesso!");
+        } else {
+            System.out.println("Valor inválido para transferência.");
+        }
     }
 
-    public static void exibirObjetivo(ObjetivoFinanceiro objetivo) {
-        System.out.println("Nome: " + objetivo.getNome());
-        System.out.println("Valor a Atingir: " + objetivo.getValorAtingir());
-        System.out.println("Valor Atual: " + objetivo.getValorAtual());
-        System.out.println("-----------------------");
+    public void exibirObjetivo() {
+        System.out.println("=== Objetivo Financeiro ===");
+        System.out.println("Nome: " + nome);
+        System.out.println("Valor a Atingir: " + valorAtingir);
+        System.out.println("Valor Atual: " + valorAtual);
+        System.out.println("Progresso: " + (valorAtual / valorAtingir * 100) + "%");
     }
 }
