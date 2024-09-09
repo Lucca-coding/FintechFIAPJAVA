@@ -5,13 +5,13 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Login usuario = null;
         Perfil perfil = null;
-        Transacao transacao = null;
+        Financeiro financeiro = new Financeiro();
         ObjetivoFinanceiro objetivo = null;
         boolean continuar = true;
 
         while (continuar) {
             if (usuario == null || !usuario.isLoggedIn()) {
-                // Menu Inicial: Registro, Login, Sair
+                // Menu Inicial
                 System.out.println("=== Menu Inicial ===");
                 System.out.println("1. Registrar");
                 System.out.println("2. Fazer Login");
@@ -68,7 +68,7 @@ public class Main {
                     scanner.nextLine(); // Consumir a entrada inválida
                 }
             } else {
-                // Menu Principal: Exibir Perfil, Adicionar Recebimento, etc.
+                // Menu Principal
                 System.out.println("=== Menu Principal ===");
                 System.out.println("1. Exibir Perfil");
                 System.out.println("2. Adicionar Recebimento");
@@ -113,8 +113,8 @@ public class Main {
                                 categoriaRecebimento = Categoria.obterCategoriaPadrao();
                             }
 
-                            transacao = new Transacao(valorRecebimento, "Recebimento", descricaoRecebimento, categoriaRecebimento);
-                            System.out.println("Recebimento adicionado com sucesso!");
+                            Transacao transacaoRecebimento = new Transacao(valorRecebimento, "Recebimento", descricaoRecebimento, categoriaRecebimento);
+                            financeiro.adicionarTransacao(transacaoRecebimento);
                             break;
                         case 3: // Adicionar Gasto
                             System.out.print("Digite o valor do gasto: ");
@@ -133,16 +133,11 @@ public class Main {
                                 categoriaGasto = Categoria.obterCategoriaPadrao();
                             }
 
-                            transacao = new Transacao(valorGasto, "Gasto", descricaoGasto, categoriaGasto);
-                            System.out.println("Gasto adicionado com sucesso!");
+                            Transacao transacaoGasto = new Transacao(valorGasto, "Gasto", descricaoGasto, categoriaGasto);
+                            financeiro.adicionarTransacao(transacaoGasto);
                             break;
                         case 4: // Exibir Transações
-                            if (transacao == null) {
-                                System.out.println("Nenhuma transação registrada.");
-                            } else {
-                                System.out.println("=== Transações ===");
-                                Transacao.exibirTransacao(transacao);
-                            }
+                            financeiro.exibirTransacoes();
                             break;
                         case 5: // Criar Objetivo Financeiro
                             System.out.print("Digite o nome do objetivo financeiro: ");

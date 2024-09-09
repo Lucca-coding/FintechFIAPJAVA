@@ -1,16 +1,17 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Financeiro {
-    private List<Transacao> transacoes = new ArrayList<>();
+    private Transacao transacaoAtual;
 
     public void adicionarTransacao(Transacao transacao) {
-        transacoes.add(transacao);
+        this.transacaoAtual = transacao;
+        System.out.println("Transação adicionada com sucesso!");
     }
 
     public void exibirTransacoes() {
-        for (Transacao t : transacoes) {
-            System.out.println(t);
+        if (transacaoAtual == null) {
+            System.out.println("Nenhuma transação registrada.");
+        } else {
+            System.out.println("=== Transação ===");
+            Transacao.exibirTransacao(transacaoAtual);
         }
     }
 }
